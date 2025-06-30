@@ -5,6 +5,22 @@ Screen {
     color: $text;
 }
 
+/* Color Variables */
+:root {
+    --primary: #0078d4;
+    --primary-dark: #005a9e; 
+    --accent: #00bcf2;
+    --success: #107c10;
+    --warning: #ffd23f;
+    --error: #d13438;
+    --surface: #1e1e1e;
+    --surface-light: #2d2d30;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --text-muted: #969696;
+    --border: #404040;
+}
+
 /* Header and Footer */
 Header {
     background: $primary;
@@ -47,6 +63,453 @@ Footer {
     text-style: bold;
     color: $accent;
     margin: 1 0 0 0;
+}
+
+/* Phase 3: Model Explorer Styles */
+.explorer-container {
+    height: 100%;
+    margin: 1;
+}
+
+.toolbar {
+    height: 3;
+    background: $surface;
+    border: solid $border;
+    margin: 0 0 1 0;
+}
+
+.toolbar-horizontal {
+    height: 100%;
+}
+
+.toolbar-left {
+    width: 1fr;
+    padding: 0 1;
+}
+
+.toolbar-right {
+    width: 2fr;
+    padding: 0 1;
+}
+
+.toolbar-controls {
+    height: 100%;
+    align: right middle;
+}
+
+.project-name {
+    text-style: bold;
+    color: $primary;
+}
+
+.search-input {
+    width: 25;
+    margin: 0 1 0 0;
+}
+
+.filter-label {
+    margin: 0 1 0 1;
+    color: $text-secondary;
+}
+
+.rollup-switch {
+    margin: 0 1;
+}
+
+.action-button {
+    margin: 0 0 0 1;
+    background: $surface-light;
+    color: $text-primary;
+    border: solid $border;
+}
+
+.action-button:hover {
+    background: $primary;
+}
+
+.primary-button {
+    margin: 0 0 0 1;
+    background: $primary;
+    color: $text-primary;
+    text-style: bold;
+}
+
+.primary-button:hover {
+    background: $primary-dark;
+}
+
+.main-content {
+    height: 1fr;
+}
+
+.main-horizontal {
+    height: 100%;
+}
+
+.tree-panel {
+    width: 1fr;
+    border: solid $border;
+    margin: 0 1 0 0;
+}
+
+.details-panel {
+    width: 1fr;
+    border: solid $border;
+}
+
+.panel-header {
+    text-style: bold;
+    background: $surface-light;
+    color: $text-primary;
+    padding: 0 1;
+    dock: top;
+    height: 1;
+}
+
+.tree-container, .details-container {
+    height: 100%;
+    padding: 1;
+}
+
+.model-tree {
+    height: 100%;
+}
+
+.model-details {
+    height: 100%;
+    padding: 1;
+}
+
+/* Phase 3: Discovery Wizard Styles */
+.discovery-container {
+    height: 100%;
+    margin: 1;
+}
+
+.wizard-content {
+    height: 100%;
+}
+
+.discovery-header {
+    height: 3;
+    background: $surface;
+    border: solid $border;
+    margin: 0 0 1 0;
+}
+
+.header-info {
+    height: 100%;
+    padding: 0 1;
+    align: center middle;
+}
+
+.step-info {
+    color: $accent;
+    text-style: bold;
+}
+
+.tab-content {
+    height: 1fr;
+    padding: 1;
+}
+
+.section-header {
+    text-style: bold;
+    color: $primary;
+    margin: 0 0 1 0;
+}
+
+.model-list {
+    height: 1fr;
+    border: solid $border;
+    margin: 0 0 1 0;
+}
+
+.selection-controls, .analysis-controls, .review-controls, .save-controls {
+    height: 3;
+    align: center middle;
+}
+
+.analysis-progress {
+    margin: 1 0;
+}
+
+.status-text {
+    color: $text-secondary;
+    margin: 1 0;
+}
+
+.analysis-results {
+    height: 1fr;
+    border: solid $border;
+    margin: 1 0;
+}
+
+.results-table {
+    height: 1fr;
+    border: solid $border;
+}
+
+.review-controls {
+    margin: 1 0;
+}
+
+.save-options {
+    margin: 1 0;
+    padding: 1;
+    border: solid $border;
+    background: $surface-light;
+}
+
+.save-path {
+    width: 30;
+    margin: 1 0;
+}
+
+.save-summary {
+    color: $accent;
+    text-style: bold;
+    margin: 1 0;
+}
+
+.save-results {
+    height: 3;
+    margin: 1 0;
+}
+
+/* Phase 3: Metrics Library Styles */
+.metrics-library-container {
+    height: 100%;
+    margin: 1;
+}
+
+.library-content {
+    height: 100%;
+}
+
+.header-section {
+    height: 3;
+    background: $surface;
+    border: solid $border;
+    margin: 0 0 1 0;
+}
+
+.library-header {
+    height: 100%;
+    padding: 0 1;
+}
+
+.header-left {
+    width: 1fr;
+}
+
+.header-right {
+    width: 2fr;
+}
+
+.header-controls {
+    align: right middle;
+}
+
+.metrics-count {
+    color: $text-secondary;
+}
+
+.filter-input {
+    width: 20;
+    margin: 0 1 0 0;
+}
+
+.type-filter {
+    width: 12;
+    margin: 0 1 0 0;
+}
+
+.tabs-section {
+    height: 1fr;
+}
+
+.all-metrics-content {
+    height: 100%;
+}
+
+.metrics-table {
+    height: 1fr;
+    border: solid $border;
+}
+
+.controls-section {
+    height: 3;
+    background: $surface-light;
+    border: solid $border;
+    padding: 0 1;
+}
+
+.table-controls {
+    height: 100%;
+    align: center middle;
+}
+
+.selection-info {
+    color: $text-secondary;
+}
+
+.table-actions {
+    align: right middle;
+}
+
+.danger-button {
+    background: $error;
+    color: $text-primary;
+    margin: 0 0 0 1;
+}
+
+.danger-button:hover {
+    background: #b91c1c;
+}
+
+/* Modal Styles */
+.modal-container {
+    align: center middle;
+}
+
+.metric-form-modal {
+    width: 80;
+    height: 30;
+    background: $surface;
+    border: solid $border;
+    padding: 1;
+}
+
+.modal-title {
+    text-style: bold;
+    color: $primary;
+    text-align: center;
+    margin: 0 0 1 0;
+}
+
+.form-content {
+    height: 1fr;
+}
+
+.form-section {
+    margin: 0 0 2 0;
+    padding: 1;
+    border: solid $border;
+    background: $surface-light;
+}
+
+.section-label {
+    text-style: bold;
+    color: $accent;
+    margin: 0 0 1 0;
+}
+
+.form-row {
+    height: 3;
+}
+
+.form-field {
+    width: 1fr;
+    margin: 0 1 0 0;
+}
+
+.form-field Label {
+    color: $text-secondary;
+    margin: 0 0 1 0;
+}
+
+.button-container {
+    height: 3;
+    dock: bottom;
+}
+
+.form-buttons {
+    height: 100%;
+    align: right middle;
+}
+
+.cancel-button {
+    background: $surface-light;
+    color: $text-secondary;
+    margin: 0 1 0 0;
+}
+
+.save-button {
+    background: $success;
+    color: $text-primary;
+}
+
+/* Enhanced DataTable Styles */
+.enhanced-data-table {
+    border: solid $border;
+}
+
+.enhanced-data-table > DataTable {
+    background: $background;
+}
+
+.enhanced-data-table > DataTable > .header {
+    background: $surface-light;
+    color: $text-primary;
+    text-style: bold;
+}
+
+.enhanced-data-table > DataTable > .row-selected {
+    background: $primary;
+    color: $text-primary;
+}
+
+.enhanced-data-table > DataTable > .row-highlighted {
+    background: $surface-light;
+}
+
+/* Utility Classes */
+.center-container {
+    align: center middle;
+}
+
+.error-message {
+    color: $error;
+    text-style: bold;
+    text-align: center;
+}
+
+.success-message {
+    color: $success;
+    text-style: bold;
+}
+
+.info-message {
+    color: $accent;
+    text-align: center;
+}
+
+.help-text {
+    color: $text-secondary;
+    text-align: center;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 80) {
+    .toolbar-horizontal {
+        layout: vertical;
+    }
+    
+    .main-horizontal {
+        layout: vertical;
+    }
+    
+    .tree-panel {
+        height: 1fr;
+        width: 100%;
+        margin: 0 0 1 0;
+    }
+    
+    .details-panel {
+        height: 1fr;
+        width: 100%;
+    }
 }
 
 .instruction {
