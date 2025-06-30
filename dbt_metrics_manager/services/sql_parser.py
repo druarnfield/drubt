@@ -62,7 +62,7 @@ class SqlParser:
     
     def __init__(self):
         """Initialize the SQL parser."""
-        self.dialect = sqlglot.dialect.BigQuery  # Default to BigQuery, can be configured
+        self.dialect = "bigquery"  # Default to BigQuery, can be configured
     
     def parse_file(self, file_path: Path) -> SqlParseResult:
         """Parse a SQL file and extract column and table information.

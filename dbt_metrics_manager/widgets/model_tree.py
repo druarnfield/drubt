@@ -11,7 +11,7 @@ from textual.reactive import reactive
 from textual.message import Message
 
 from ..models.dbt_model import DbtModel
-# from ..services.sql_parser import SqlParseResult  # TODO: Implement in Phase 2
+from ..services.sql_parser import SqlParseResult
 
 
 @dataclass
@@ -20,7 +20,7 @@ class ModelNodeData:
     model: Optional[DbtModel] = None
     path: Optional[str] = None
     is_directory: bool = False
-    # sql_result: Optional[SqlParseResult] = None  # TODO: Implement in Phase 2
+    sql_result: Optional[SqlParseResult] = None
 
 
 class ModelTree(Widget):

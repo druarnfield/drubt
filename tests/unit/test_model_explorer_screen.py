@@ -7,7 +7,7 @@ from textual.widgets import Input, Switch
 
 from dbt_metrics_manager.screens.models import ModelExplorerScreen, ModelDetailsPanel
 from dbt_metrics_manager.models.dbt_model import DbtModel
-from dbt_metrics_manager.widgets.model_tree import ModelSelectedMessage
+from dbt_metrics_manager.widgets.model_tree import ModelTree
 from dbt_metrics_manager.state import AppState
 
 
@@ -145,7 +145,7 @@ class TestModelExplorerScreen:
         
         # Create model selected message
         selected_model = sample_models[0]
-        message = ModelSelectedMessage(selected_model)
+        message = ModelTree.ModelSelected(selected_model)
         
         screen.on_model_selected(message)
         

@@ -6,7 +6,7 @@ from unittest.mock import Mock, patch
 from textual.app import App
 from textual.message import Message
 
-from dbt_metrics_manager.widgets.model_tree import ModelTree, ModelSelectedMessage
+from dbt_metrics_manager.widgets.model_tree import ModelTree
 from dbt_metrics_manager.models.dbt_model import DbtModel
 
 
@@ -50,13 +50,12 @@ class TestModelTreeWidget:
     @pytest.fixture 
     def model_tree(self):
         """Create ModelTree widget instance."""
-        return ModelTree(id="test-tree")
+        return ModelTree(models=[], id="test-tree")
     
     def test_model_tree_initialization(self, model_tree):
         """Test ModelTree widget initialization."""
         assert model_tree.id == "test-tree"
         assert model_tree.show_rollup_only == False
-        assert model_tree.search_query == ""
         assert len(model_tree.models) == 0
     
     def test_update_models(self, model_tree, sample_models):
@@ -120,10 +119,10 @@ class TestModelTreeWidget:
         with patch.object(model_tree, 'post_message') as mock_post:
             model_tree._select_model(sample_models[0])
             
-            # Should post ModelSelectedMessage
+            # Should post ModelSelected message
             mock_post.assert_called_once()
             call_args = mock_post.call_args[0][0]
-            assert isinstance(call_args, ModelSelectedMessage)
+            assert isinstance(call_args, ModelTree.ModelSelected)
             assert call_args.model == sample_models[0]
     
     def test_model_icons(self, model_tree, sample_models):
@@ -190,10 +189,10 @@ class TestModelTreeWidget:
 
 
 class TestModelSelectedMessage:
-    """Unit tests for ModelSelectedMessage."""
+    """Unit tests for ModelSelected message."""
     
     def test_message_creation(self):
-        """Test creating ModelSelectedMessage."""
+        """Test creating ModelSelected message."""
         model = DbtModel(
             name="test_model",
             file_path="models/test.sql",
@@ -202,7 +201,7 @@ class TestModelSelectedMessage:
             description="Test model"
         )
         
-        message = ModelSelectedMessage(model)
+        message = ModelTree.ModelSelected(model)
         assert message.model == model
         assert isinstance(message, Message)
     
@@ -216,6 +215,6 @@ class TestModelSelectedMessage:
             description="Test"
         )
         
-        message = ModelSelectedMessage(model)
+        message = ModelTree.ModelSelected(model)
         # Message should bubble by default in Textual
         assert message.can_bubble
