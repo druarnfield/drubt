@@ -1,0 +1,282 @@
+/* DBT Metrics Manager TUI Styles */
+
+Screen {
+    background: $background;
+    color: $text;
+}
+
+/* Header and Footer */
+Header {
+    background: $primary;
+    color: $text-primary;
+    dock: top;
+    height: 3;
+}
+
+Footer {
+    background: $surface;
+    color: $text-secondary;
+    dock: bottom;
+    height: 1;
+}
+
+/* Dashboard Styles */
+.dashboard-container {
+    margin: 1;
+    height: 100%;
+}
+
+.welcome-container {
+    align: center middle;
+    text-align: center;
+    padding: 2;
+}
+
+.welcome-title {
+    text-style: bold;
+    color: $primary;
+    margin: 1;
+}
+
+.welcome-subtitle {
+    color: $text-secondary;
+    margin: 0 0 2 0;
+}
+
+.instructions-title {
+    text-style: bold;
+    color: $accent;
+    margin: 1 0 0 0;
+}
+
+.instruction {
+    color: $text-secondary;
+    margin: 0 0 0 2;
+}
+
+.spacer {
+    height: 1;
+}
+
+/* Project Info */
+.project-header {
+    height: 3;
+    margin: 0 0 1 0;
+}
+
+.project-info {
+    background: $surface;
+    color: $text-secondary;
+    padding: 1;
+    border: solid $secondary;
+}
+
+/* Stats Cards */
+.stats-section {
+    height: 7;
+    margin: 0 0 1 0;
+}
+
+.stats-row {
+    height: 5;
+    margin: 1 0;
+}
+
+.stat-card {
+    background: $surface;
+    border: solid $primary;
+    border-title-color: $primary;
+    padding: 1;
+    margin: 0 1;
+    text-align: center;
+    content-align: center middle;
+    min-width: 20;
+}
+
+/* Content Sections */
+.content-section {
+    height: auto;
+}
+
+.content-row {
+    height: 100%;
+}
+
+.activity-panel, .actions-panel {
+    border: solid $secondary;
+    margin: 0 1;
+    padding: 1;
+    width: 50%;
+}
+
+.panel-title {
+    background: $primary;
+    color: $text-primary;
+    padding: 0 1;
+    text-style: bold;
+    margin: 0 0 1 0;
+}
+
+.activity-list {
+    color: $text-secondary;
+    height: auto;
+}
+
+.no-recent {
+    color: $text-disabled;
+    text-align: center;
+    padding: 2;
+}
+
+/* Settings Screen */
+.settings-container {
+    margin: 1;
+    height: 100%;
+}
+
+.section-title {
+    text-style: bold;
+    color: $accent;
+    margin: 0 0 1 0;
+    padding: 0 1;
+    background: $surface;
+    border: solid $secondary;
+}
+
+.project-section {
+    margin: 0 0 2 0;
+    border: solid $secondary;
+    padding: 1;
+}
+
+.project-config {
+    height: auto;
+}
+
+.button-row {
+    height: 3;
+    margin: 1 0;
+}
+
+.directory-browser {
+    height: 15;
+    margin: 1 0;
+    border: solid $accent;
+}
+
+.recent-section {
+    height: auto;
+    border: solid $secondary;
+    padding: 1;
+}
+
+.recent-projects-list {
+    height: auto;
+}
+
+.recent-project-btn {
+    width: 100%;
+    margin: 0 0 1 0;
+    text-align: left;
+}
+
+/* Form Elements */
+Input {
+    margin: 0 0 1 0;
+    background: $surface;
+    border: solid $secondary;
+}
+
+Input:focus {
+    border: solid $accent;
+}
+
+Button {
+    margin: 0 1 0 0;
+    background: $surface;
+    border: solid $secondary;
+    color: $text;
+}
+
+Button:hover {
+    background: $accent;
+    color: $text-primary;
+}
+
+Button.-primary {
+    background: $primary;
+    color: $text-primary;
+    border: solid $primary;
+}
+
+Button.-primary:hover {
+    background: $accent;
+    border: solid $accent;
+}
+
+Button:disabled {
+    background: $surface-darken-1;
+    color: $text-disabled;
+    border: solid $surface-darken-2;
+}
+
+Label {
+    color: $text-secondary;
+    margin: 0 0 1 0;
+}
+
+/* Directory Tree */
+DirectoryTree {
+    background: $background;
+    color: $text;
+}
+
+DirectoryTree > .tree--cursor {
+    background: $accent;
+    color: $text-primary;
+}
+
+DirectoryTree > .tree--highlight {
+    background: $primary;
+    color: $text-primary;
+}
+
+/* Loading and Status */
+.loading-spinner {
+    align: center middle;
+}
+
+.error-message {
+    background: $error;
+    color: $text-primary;
+    padding: 1;
+    margin: 1;
+    border: solid $error;
+}
+
+.success-message {
+    background: $success;
+    color: $text-primary;
+    padding: 1;
+    margin: 1;
+    border: solid $success;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none;
+}
+
+.center {
+    text-align: center;
+}
+
+.bold {
+    text-style: bold;
+}
+
+.dim {
+    color: $text-disabled;
+}
+
+/* Media queries not supported in Textual CSS - removing responsive section */

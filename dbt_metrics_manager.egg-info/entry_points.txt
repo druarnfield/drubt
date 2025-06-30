@@ -1,0 +1,2 @@
+[console_scripts]
+dbt-metrics = dbt_metrics_manager.app:main
