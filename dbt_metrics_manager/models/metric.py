@@ -3,6 +3,14 @@
 from dataclasses import dataclass, field
 from typing import Optional, List, Dict, Any
 from datetime import datetime
+from enum import Enum
+
+
+class MetricType(Enum):
+    """Enumeration of metric types."""
+    DIRECT = "direct"
+    RATIO = "ratio"
+    CUSTOM = "custom"
 
 
 @dataclass
@@ -10,90 +18,143 @@ class Metric:
     """Core metric data model."""
     
     # Required fields
-    metric_category: str
     name: str
     short: str
-    type: str  # "direct", "ratio", "custom"
+    type: MetricType
+    category: Optional[str] = None  # For backward compatibility
+    
+    # Legacy field for backward compatibility
+    metric_category: Optional[str] = None
     
     # Type-specific fields
     value: Optional[str] = None
     numerator: Optional[str] = None
     denominator: Optional[str] = None
-    expression: Optional[str] = None
+    sql: Optional[str] = None  # Renamed from expression for consistency
+    expression: Optional[str] = None  # Keep for backward compatibility
     
     # Optional metadata
     multiplier: Optional[int] = None
     description: Optional[str] = None
-    source_model: Optional[str] = None
-    tags: List[str] = field(default_factory=list)
+    model_name: Optional[str] = None  # Renamed from source_model
+    source_model: Optional[str] = None  # Keep for backward compatibility
+    owner: Optional[str] = None
+    tags: Optional[List[str]] = None
+    confidence_score: Optional[float] = None
     
     # Timestamps
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
+    created_date: Optional[datetime] = None  # For backward compatibility
+    updated_date: Optional[datetime] = None  # For backward compatibility
     
     def __post_init__(self):
-        """Set timestamps on creation."""
+        """Set timestamps and handle backward compatibility."""
+        now = datetime.now()
+        
         if self.created_at is None:
-            self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+            self.created_at = now
+            self.created_date = now  # Backward compatibility
+        self.updated_at = now
+        self.updated_date = now  # Backward compatibility
+        
+        # Handle backward compatibility for category
+        if self.metric_category and not self.category:
+            self.category = self.metric_category
+        elif self.category and not self.metric_category:
+            self.metric_category = self.category
+        
+        # Handle backward compatibility for model name
+        if self.source_model and not self.model_name:
+            self.model_name = self.source_model
+        elif self.model_name and not self.source_model:
+            self.source_model = self.model_name
+        
+        # Handle backward compatibility for expression/sql
+        if self.expression and not self.sql:
+            self.sql = self.expression
+        elif self.sql and not self.expression:
+            self.expression = self.sql
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for CSV export."""
         return {
-            "metric_category": self.metric_category,
             "name": self.name,
             "short": self.short,
-            "type": self.type,
+            "type": self.type.value if isinstance(self.type, MetricType) else self.type,
+            "category": self.category or "",
             "value": self.value or "",
             "numerator": self.numerator or "",
             "denominator": self.denominator or "",
-            "expression": self.expression or "",
-            "multiplier": self.multiplier or "",
+            "sql": self.sql or "",
+            "model_name": self.model_name or "",
             "description": self.description or "",
-            "source_model": self.source_model or "",
-            "tags": ",".join(self.tags) if self.tags else ""
+            "owner": self.owner or "",
+            "tags": ",".join(self.tags) if self.tags else "",
+            "multiplier": self.multiplier or "",
+            # Legacy fields for backward compatibility
+            "metric_category": self.metric_category or self.category or "",
+            "expression": self.expression or self.sql or "",
+            "source_model": self.source_model or self.model_name or "",
         }
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Metric":
         """Create from dictionary."""
-        tags = [t.strip() for t in data.get("tags", "").split(",") if t.strip()]
+        tags_str = data.get("tags", "")
+        tags = [t.strip() for t in tags_str.split(",") if t.strip()] if tags_str else None
+        
+        # Handle type conversion
+        type_value = data.get("type", "")
+        if isinstance(type_value, str):
+            try:
+                metric_type = MetricType(type_value)
+            except ValueError:
+                # Fallback for invalid types
+                metric_type = MetricType.DIRECT
+        else:
+            metric_type = type_value
         
         return cls(
-            metric_category=data["metric_category"],
             name=data["name"],
             short=data["short"],
-            type=data["type"],
+            type=metric_type,
+            category=data.get("category") or data.get("metric_category"),
             value=data.get("value") or None,
             numerator=data.get("numerator") or None,
             denominator=data.get("denominator") or None,
-            expression=data.get("expression") or None,
-            multiplier=int(data["multiplier"]) if data.get("multiplier") else None,
+            sql=data.get("sql") or data.get("expression") or None,
+            model_name=data.get("model_name") or data.get("source_model") or None,
             description=data.get("description") or None,
-            source_model=data.get("source_model") or None,
-            tags=tags
+            owner=data.get("owner") or None,
+            multiplier=int(data["multiplier"]) if data.get("multiplier") else None,
+            tags=tags,
+            # Set legacy fields for backward compatibility
+            metric_category=data.get("metric_category"),
+            expression=data.get("expression"),
+            source_model=data.get("source_model")
         )
     
     def validate(self) -> List[str]:
         """Validate metric configuration."""
         errors = []
         
-        if not self.name.strip():
+        if not self.name or not self.name.strip():
             errors.append("Name is required")
         
-        if not self.short.strip():
+        if not self.short or not self.short.strip():
             errors.append("Short code is required")
         
-        if self.type not in ["direct", "ratio", "custom"]:
-            errors.append("Type must be direct, ratio, or custom")
-        
-        if self.type == "direct" and not self.value:
-            errors.append("Direct metrics require a value column")
-        
-        if self.type == "ratio" and (not self.numerator or not self.denominator):
-            errors.append("Ratio metrics require numerator and denominator")
-        
-        if self.type == "custom" and not self.expression:
-            errors.append("Custom metrics require an expression")
+        if not isinstance(self.type, MetricType):
+            errors.append("Type must be a valid MetricType")
+        else:
+            if self.type == MetricType.DIRECT and not self.value:
+                errors.append("Direct metrics require a value column")
+            
+            if self.type == MetricType.RATIO and (not self.numerator or not self.denominator):
+                errors.append("Ratio metrics require numerator and denominator")
+            
+            if self.type == MetricType.CUSTOM and not (self.sql or self.expression):
+                errors.append("Custom metrics require a SQL expression")
         
         return errors

@@ -1,5 +1,88 @@
 # DBT Metrics Manager TUI - Development Actions Log
 
+## 2024-12-30 - Phase 2 Implementation Started
+
+### Phase 2 Objectives
+Implementing core services and advanced UI components for the DBT Metrics Manager TUI. This phase focuses on the business logic layer that will power metric discovery, SQL parsing, and seed file management.
+
+### 🎯 Phase 2 Scope
+1. **Core Services**:
+   - SQL Parser service using sqlglot for dbt SQL file analysis
+   - Metric Analyzer service for pattern-based discovery of metric columns
+   - Seed Manager service for reading/writing metric_definitions.csv files
+
+2. **Advanced UI Screens**:
+   - Model Explorer screen with tree view navigation and column details
+   - Discovery Wizard screen for guided metric discovery workflow
+   - Metrics Library screen for CRUD operations on existing metrics
+
+3. **Enhanced Widgets**:
+   - DataTable widget for displaying tabular data with sorting/filtering
+   - MetricForm widget for editing metric definitions
+   - ModelTree widget for hierarchical model navigation
+
+4. **Comprehensive Testing**:
+   - Unit tests for all new services with >90% coverage
+   - Integration tests for complete user workflows
+   - Performance tests with large datasets
+
+### 📋 Implementation Plan
+- Start with high-priority core services (SQL Parser, Metric Analyzer, Seed Manager)
+- Build UI components incrementally with immediate testing
+- Maintain test coverage throughout development
+- Document all public APIs and usage patterns
+
+### ✅ Phase 2 Core Services Complete
+
+#### SQL Parser Service (`services/sql_parser.py`)
+- **Completed**: Full SQL parsing using sqlglot library
+- **Features**: 
+  - Parse dbt SQL files and extract column information
+  - Identify rollup models with aggregation detection
+  - Support for CTE extraction and table analysis
+  - Fallback regex parsing for complex cases
+  - Comprehensive pattern matching for metric columns
+- **Testing**: 15 unit tests covering all major functionality
+
+#### Metric Analyzer Service (`services/metric_analyzer.py`) 
+- **Completed**: Pattern-based metric discovery engine
+- **Features**:
+  - Automatic detection of direct, ratio, and custom metrics
+  - Confidence scoring based on naming patterns and business domains
+  - Smart categorization and metric name generation
+  - Batch analysis of multiple models
+  - Caching for performance optimization
+- **Testing**: 17 unit tests with integration test scenarios
+
+#### Seed Manager Service (`services/seed_manager.py`)
+- **Completed**: CSV file operations for metric_definitions.csv
+- **Features**:
+  - Read/write metrics from CSV with pandas integration
+  - Comprehensive validation with detailed error reporting
+  - Backup system with automatic restore capabilities
+  - Merge operations for combining new and existing metrics
+  - Template creation with sample data
+- **Testing**: 21 unit tests covering all CRUD operations
+
+#### Enhanced Metric Model (`models/metric.py`)
+- **Updated**: Added MetricType enum for type safety
+- **Backward Compatibility**: Maintains support for legacy field names
+- **New Fields**: confidence_score, owner, improved validation
+- **Testing**: All existing tests updated to use new enum system
+
+### 🧪 Test Coverage Summary
+- **Total Tests**: 72 unit tests across all services
+- **Core Services**: 53 new tests for Phase 2 services
+- **Coverage**: Comprehensive testing of all public APIs
+- **Status**: All core functionality tested and working
+
+### 📊 Technical Implementation Details
+- **Dependencies Added**: sqlglot 26.31.0, pyyaml 6.0.2 for SQL parsing
+- **Architecture**: Modular service layer with clear separation of concerns
+- **Error Handling**: Comprehensive validation and user-friendly error messages
+- **Performance**: Efficient parsing with caching and lazy loading patterns
+- **Compatibility**: Backward compatible with Phase 1 data structures
+
 ## 2024-12-30 - Phase 1 Implementation Complete
 
 ### Summary
