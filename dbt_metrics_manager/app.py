@@ -5,6 +5,9 @@ from textual.binding import Binding
 from textual.widgets import Header, Footer
 
 from .screens import DashboardScreen, SettingsScreen
+from .screens.models import ModelExplorerScreen
+from .screens.discovery import DiscoveryWizardScreen
+from .screens.metrics import MetricsLibraryScreen
 from .state import AppState
 
 
@@ -21,6 +24,9 @@ class DbtMetricsManagerApp(App[None]):
         Binding("ctrl+d", "toggle_dark", "Toggle Dark Mode"),
         Binding("ctrl+h", "help", "Help"),
         Binding("f1", "show_dashboard", "Dashboard"),
+        Binding("f2", "show_models", "Models"),
+        Binding("f3", "show_metrics", "Metrics"),
+        Binding("f4", "show_discovery", "Discovery"),
         Binding("f5", "show_settings", "Settings"),
     ]
     
@@ -41,6 +47,27 @@ class DbtMetricsManagerApp(App[None]):
         """Show dashboard screen."""
         self.push_screen(DashboardScreen(self.app_state))
     
+    def action_show_models(self) -> None:
+        """Show model explorer screen."""
+        if not self.app_state.project_loaded:
+            self.notify("Please load a project first (F5)", severity="warning")
+            return
+        self.push_screen(ModelExplorerScreen(self.app_state))
+    
+    def action_show_metrics(self) -> None:
+        """Show metrics library screen."""
+        if not self.app_state.project_loaded:
+            self.notify("Please load a project first (F5)", severity="warning")
+            return
+        self.push_screen(MetricsLibraryScreen(self.app_state))
+    
+    def action_show_discovery(self) -> None:
+        """Show discovery wizard screen."""
+        if not self.app_state.project_loaded:
+            self.notify("Please load a project first (F5)", severity="warning")
+            return
+        self.push_screen(DiscoveryWizardScreen(self.app_state))
+    
     def action_show_settings(self) -> None:
         """Show settings screen."""
         self.push_screen(SettingsScreen(self.app_state))
@@ -52,24 +79,43 @@ DBT Metrics Manager TUI - Keyboard Shortcuts
 
 Navigation:
 - F1: Dashboard (project overview and stats)
+- F2: Model Explorer (browse and analyze models)
+- F3: Metrics Library (manage existing metrics)
+- F4: Discovery Wizard (find new metrics)
 - F5: Settings (project configuration)
 - q: Quit application
 - Ctrl+D: Toggle dark/light mode
 - Ctrl+H: Show this help
 
-Dashboard Actions:
-- r: Refresh project data
-- Enter: Select highlighted item
-
-General:
-- Tab: Move focus between panels
-- Escape: Go back/cancel
+Screen-Specific Actions:
+- r: Refresh data
+- n: New item (where applicable)
+- e: Edit selected item
+- d: Delete selected item
+- Ctrl+S: Save to file
+- Ctrl+F: Filter/search
+- Space: Toggle selection
 - Enter: Confirm/select
-- Space: Toggle selection (where applicable)
+- Escape: Go back/cancel
+
+Model Explorer:
+- a: Analyze selected model
+- d: Discover metrics in model
+- Ctrl+F: Search models
+
+Discovery Wizard:
+- Ctrl+A: Analyze all models
+- Space: Toggle metric selection
+
+Metrics Library:
+- n: Create new metric
+- e: Edit selected metric
+- d: Delete selected metrics
+- Ctrl+O: Load from file
 
 For more information, visit the project documentation.
         """
-        self.notify(help_text, title="Help", timeout=10)
+        self.notify(help_text, title="Help", timeout=15)
 
 
 def main():
